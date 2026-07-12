@@ -1,0 +1,1 @@
+export default function Footer(){return <footer><b>ADMUD SMP</b><p>Survive. Trade. Build your story.</p><small>© 2026 Admud SMP. Fan-made server website, tidak berafiliasi dengan Mojang/Microsoft.</small></footer>}

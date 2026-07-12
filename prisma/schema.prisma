@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProductType {
+  RANK
+  SHARD
+}
+
+enum TicketStatus {
+  OPEN
+  CLOSED
+}
+
+enum SenderRole {
+  CUSTOMER
+  ADMIN
+  SYSTEM
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  slug        String      @unique
+  name        String
+  type        ProductType
+  price       Int
+  image       String?
+  description String
+  benefits    String[]
+  active      Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+}
+
+model Ticket {
+  id          String       @id @default(cuid())
+  publicToken String       @unique @default(cuid())
+  playerName  String
+  email       String?
+  productId   String?
+  productName String
+  payment     String
+  status      TicketStatus @default(OPEN)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  messages    Message[]
+}
+
+model Message {
+  id        String     @id @default(cuid())
+  ticketId  String
+  body      String
+  sender    SenderRole
+  createdAt DateTime   @default(now())
+
+  ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+}

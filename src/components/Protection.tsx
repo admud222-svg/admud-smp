@@ -1,0 +1,2 @@
+'use client';import {useEffect} from 'react';
+export default function Protection(){useEffect(()=>{const block=(e:Event)=>{const el=e.target as HTMLElement;if(el.closest('input,textarea,[contenteditable=true]'))return;e.preventDefault()};document.addEventListener('contextmenu',block);document.addEventListener('copy',block);return()=>{document.removeEventListener('contextmenu',block);document.removeEventListener('copy',block)}},[]);return null}
